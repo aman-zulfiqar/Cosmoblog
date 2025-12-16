@@ -1,0 +1,13 @@
+syntax = "proto3";
+package planet.blog.v1;
+
+option go_package = "planet/x/blog/types";
+
+// SentPost defines the SentPost message.
+message SentPost {
+  uint64 id = 1;
+  uint64 post_id = 2;
+  string title = 3;
+  string chain = 4;
+  string creator = 5;
+}

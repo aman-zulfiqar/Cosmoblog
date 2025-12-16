@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package planet.blog.v1;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "planet/blog/v1/params.proto";
+import "planet/blog/v1/post.proto";
+import "planet/blog/v1/sent_post.proto";
+import "planet/blog/v1/timeout_post.proto";
+
+option go_package = "planet/x/blog/types";
+
+// GenesisState defines the blog module's genesis state.
+message GenesisState {
+  // params defines all the parameters of the module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+  string port_id = 2;
+  repeated Post post_list = 3 [(gogoproto.nullable) = false];
+  uint64 post_count = 4;
+  repeated SentPost sent_post_list = 5 [(gogoproto.nullable) = false];
+  uint64 sent_post_count = 6;
+  repeated TimeoutPost timeout_post_list = 7 [(gogoproto.nullable) = false];
+  uint64 timeout_post_count = 8;
+}

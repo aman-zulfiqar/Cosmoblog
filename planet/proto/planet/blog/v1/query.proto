@@ -1,0 +1,127 @@
+syntax = "proto3";
+
+package planet.blog.v1;
+
+import "amino/amino.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "planet/blog/v1/params.proto";
+import "planet/blog/v1/post.proto";
+import "planet/blog/v1/sent_post.proto";
+import "planet/blog/v1/timeout_post.proto";
+
+option go_package = "planet/x/blog/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/planet/blog/v1/params";
+  }
+
+  // ListPost Queries a list of Post items.
+  rpc GetPost(QueryGetPostRequest) returns (QueryGetPostResponse) {
+    option (google.api.http).get = "/planet/blog/v1/post/{id}";
+  }
+
+  // ListPost defines the ListPost RPC.
+  rpc ListPost(QueryAllPostRequest) returns (QueryAllPostResponse) {
+    option (google.api.http).get = "/planet/blog/v1/post";
+  }
+
+  // ListSentPost Queries a list of SentPost items.
+  rpc GetSentPost(QueryGetSentPostRequest) returns (QueryGetSentPostResponse) {
+    option (google.api.http).get = "/planet/blog/v1/sent_post/{id}";
+  }
+
+  // ListSentPost defines the ListSentPost RPC.
+  rpc ListSentPost(QueryAllSentPostRequest) returns (QueryAllSentPostResponse) {
+    option (google.api.http).get = "/planet/blog/v1/sent_post";
+  }
+
+  // ListTimeoutPost Queries a list of TimeoutPost items.
+  rpc GetTimeoutPost(QueryGetTimeoutPostRequest) returns (QueryGetTimeoutPostResponse) {
+    option (google.api.http).get = "/planet/blog/v1/timeout_post/{id}";
+  }
+
+  // ListTimeoutPost defines the ListTimeoutPost RPC.
+  rpc ListTimeoutPost(QueryAllTimeoutPostRequest) returns (QueryAllTimeoutPostResponse) {
+    option (google.api.http).get = "/planet/blog/v1/timeout_post";
+  }
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// QueryGetPostRequest defines the QueryGetPostRequest message.
+message QueryGetPostRequest {
+  uint64 id = 1;
+}
+
+// QueryGetPostResponse defines the QueryGetPostResponse message.
+message QueryGetPostResponse {
+  Post post = 1 [(gogoproto.nullable) = false];
+}
+
+// QueryAllPostRequest defines the QueryAllPostRequest message.
+message QueryAllPostRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+// QueryAllPostResponse defines the QueryAllPostResponse message.
+message QueryAllPostResponse {
+  repeated Post post = 1 [(gogoproto.nullable) = false];
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+// QueryGetSentPostRequest defines the QueryGetSentPostRequest message.
+message QueryGetSentPostRequest {
+  uint64 id = 1;
+}
+
+// QueryGetSentPostResponse defines the QueryGetSentPostResponse message.
+message QueryGetSentPostResponse {
+  SentPost sent_post = 1 [(gogoproto.nullable) = false];
+}
+
+// QueryAllSentPostRequest defines the QueryAllSentPostRequest message.
+message QueryAllSentPostRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+// QueryAllSentPostResponse defines the QueryAllSentPostResponse message.
+message QueryAllSentPostResponse {
+  repeated SentPost sent_post = 1 [(gogoproto.nullable) = false];
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+// QueryGetTimeoutPostRequest defines the QueryGetTimeoutPostRequest message.
+message QueryGetTimeoutPostRequest {
+  uint64 id = 1;
+}
+
+// QueryGetTimeoutPostResponse defines the QueryGetTimeoutPostResponse message.
+message QueryGetTimeoutPostResponse {
+  TimeoutPost timeout_post = 1 [(gogoproto.nullable) = false];
+}
+
+// QueryAllTimeoutPostRequest defines the QueryAllTimeoutPostRequest message.
+message QueryAllTimeoutPostRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+// QueryAllTimeoutPostResponse defines the QueryAllTimeoutPostResponse message.
+message QueryAllTimeoutPostResponse {
+  repeated TimeoutPost timeout_post = 1 [(gogoproto.nullable) = false];
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
